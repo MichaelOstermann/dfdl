@@ -1,0 +1,53 @@
+{
+    "name": "@monstermann/dfdl",
+    "type": "module",
+    "version": "0.0.0",
+    "description": "Data-First / Data-Last oriented utilities",
+    "author": "Michael Ostermann <michaelostermann@me.com>",
+    "license": "MIT",
+    "homepage": "https://github.com/MichaelOstermann/dfdl#readme",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/MichaelOstermann/dfdl.git"
+    },
+    "bugs": {
+        "url": "https://github.com/MichaelOstermann/dfdl/issues"
+    },
+    "keywords": [],
+    "sideEffects": false,
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.js"
+        },
+        "./dual": {
+            "types": "./dist/dual.d.ts",
+            "import": "./dist/dual.js"
+        },
+        "./flow": {
+            "types": "./dist/flow.d.ts",
+            "import": "./dist/flow.js"
+        },
+        "./pipe": {
+            "types": "./dist/pipe.d.ts",
+            "import": "./dist/pipe.js"
+        }
+    },
+    "main": "./dist/index.js",
+    "module": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "files": [
+        "dist"
+    ],
+    "scripts": {
+        "release": "bunx bumpp --no-push && bun publish --access public",
+        "build": "bunx rimraf dist && tsc",
+        "prepublishOnly": "bun run build"
+    },
+    "dependencies": {},
+    "devDependencies": {
+        "@monstermann/eslint-config": "^0.0.1",
+        "@sindresorhus/tsconfig": "^7.0.0",
+        "typescript": "^5.8.3"
+    }
+}
