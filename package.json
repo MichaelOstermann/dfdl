@@ -1,7 +1,7 @@
 {
     "name": "@monstermann/dfdl",
     "type": "module",
-    "version": "0.0.0",
+    "version": "0.0.1",
     "description": "Data-First / Data-Last oriented utilities",
     "author": "Michael Ostermann <michaelostermann@me.com>",
     "license": "MIT",
