@@ -40,14 +40,14 @@
         "dist"
     ],
     "scripts": {
-        "release": "bunx bumpp --no-push && bun publish --access public",
-        "build": "bunx rimraf dist && tsc",
-        "prepublishOnly": "bun run build"
+        "release": "bun run check && bunx bumpp --no-push && bun run tsdown && bun publish --access public",
+        "check": "bun run eslint && bun run tsc"
     },
     "dependencies": {},
     "devDependencies": {
-        "@monstermann/eslint-config": "^0.0.1",
+        "@monstermann/eslint-config": "^0.1.1",
         "@sindresorhus/tsconfig": "^7.0.0",
+        "tsdown": "^0.11.11",
         "typescript": "^5.8.3"
     }
 }

@@ -14,29 +14,29 @@
 Creates a function that can be used in a data-first or data-last style, making it suitable for usage in `pipe` or `flow`.
 
 ```ts
-import { dual } from "@monstermann/dfdl"
+import { dual } from "@monstermann/dfdl";
 // import dual from "@monstermann/dfdl/dual"
 
 const sum = dual<
     (b: number) => (a: number) => number,
     (a: number, b: number) => number
->(2, (a, b) => a + b)
+>(2, (a, b) => a + b);
 
-console.log(sum(2, 3)) // 5
-console.log(sum(3)(2)) // 5
+console.log(sum(2, 3)); // 5
+console.log(sum(3)(2)); // 5
 ```
 
 ```ts
-import { dual } from "@monstermann/dfdl"
+import { dual } from "@monstermann/dfdl";
 // import dual from "@monstermann/dfdl/dual"
 
 const sum: {
-    (b: number): (a: number) => number
-    (a: number, b: number): number
-} = dual(2, (a: number, b: number): number => a + b)
+    (b: number): (a: number) => number;
+    (a: number, b: number): number;
+} = dual(2, (a: number, b: number): number => a + b);
 
-console.log(sum(2, 3)) // 5
-console.log(sum(3)(2)) // 5
+console.log(sum(2, 3)); // 5
+console.log(sum(3)(2)); // 5
 ```
 
 ## pipe
@@ -44,13 +44,13 @@ console.log(sum(3)(2)) // 5
 Pipes the value of an expression into a pipeline of functions.
 
 ```ts
-import { pipe } from "@monstermann/dfdl"
+import { pipe } from "@monstermann/dfdl";
 // import pipe from "@monstermann/dfdl/pipe"
 
-const increment = (x: number) => x + 1
-const double = (x: number) => x * 2
+const increment = (x: number) => x + 1;
+const double = (x: number) => x * 2;
 
-pipe(5, increment, double) // => 12
+pipe(5, increment, double); // => 12
 ```
 
 ## flow
@@ -58,13 +58,13 @@ pipe(5, increment, double) // => 12
 A data-last version of `pipe` that could be used to provide more complex computations to functions that accept a function as a param (like `map`, `filter`, `groupBy`, etc.).
 
 ```ts
-import { flow } from "@monstermann/dfdl"
+import { flow } from "@monstermann/dfdl";
 // import flow from "@monstermann/dfdl/flow"
 
-const increment = (x: number) => x + 1
+const increment = (x: number) => x + 1;
 const double = (x: number) => x * 2;
 
-[1, 2, 3, 4].map(flow(increment, double)) // => [4, 6, 8, 10]
+[1, 2, 3, 4].map(flow(increment, double)); // => [4, 6, 8, 10]
 ```
 
 # Credits

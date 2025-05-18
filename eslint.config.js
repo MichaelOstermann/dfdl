@@ -1,3 +1,3 @@
-import monstermann from "@monstermann/eslint-config"
+import eslint from "@monstermann/eslint-config"
 
-export default monstermann()
+export default eslint()
