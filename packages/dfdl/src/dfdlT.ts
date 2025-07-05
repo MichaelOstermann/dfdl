@@ -1,42 +1,64 @@
 /* eslint-disable prefer-rest-params */
 
+import type { AnyFn } from "./types"
+
 /**
- * Creates a function that can be used in a data-first or data-last style,
- * making it suitable for usage in `pipe` or `flow`.
+ * - `dfdlT(fn, arity?: boolean)`
+ * - `dfdlT(fn, isDataFirst: (args: IArguments) => boolean)`
  *
- * The first parameter to `dual` is the arity of the uncurried function.
- *
- * **Example**
+ * Same as `dfdl` but allows explicit type definitions, which is in particularly useful if you want to use generics or additional overloads:
  *
  * ```ts
- * const sum = dual<
- *   (b: number) => (a: number) => number,
- *   (a: number, b: number) => number
- * >(2, (a, b) => a + b)
+ * import { dfdlT } from "@monstermann/dfdl";
  *
- * sum(2, 3) // => 5
- * pipe(2, sum(3)) // => 5
+ * // Using generics:
+ * const map = dfdlT<
+ *     <T, U>(fn: (item: T) => U) => (arr: T[]) => U[],
+ *     <T, U>(arr: T[], fn: (item: T) => U) => U[]
+ * >((arr, fn) => arr.map(fn));
+ *
+ * // Using overloads:
+ * const map: {
+ *     <T, U>(fn: (item: T) => U): (arr: T[]) => U[];
+ *     <T, U>(arr: T[], fn: (item: T) => U): U[];
+ * } = dfdlT(<T, U>(arr: T[], fn: (item: T) => U): U[] => arr.map(fn));
+ *
+ * // Data-first
+ * map([1, 2, 3], (x) => x * 2); // [2, 4, 6]
+ *
+ * // Data-last
+ * map((x) => x * 2)([1, 2, 3]); // [2, 4, 6]
+ *
+ * pipe(
+ *     [1, 2, 3],
+ *     map((x) => x * 2),
+ * ); // [2, 4, 6]
  * ```
  *
- * **Example** (Using call signatures to define the overloads)
+ * > [!TIP]
+ * > Typically when defining your functions in this case, you should experience better type inference when using [`NoInfer`](https://devblogs.microsoft.com/typescript/announcing-typescript-5-4-beta/#the-noinfer-utility-type):
  *
  * ```ts
- * const sum: {
- *   (b: number): (a: number) => number
- *   (a: number, b: number): number
- * } = dual(2, (a: number, b: number): number => a + b)
- *
- * sum(2, 3) // => 5
- * pipe(2, sum(3)) // => 5
+ * const map = dfdlT<
+ *     <T, U>(fn: (item: NoInfer<T>) => U) => (arr: T[]) => U[],
+ *     <T, U>(arr: T[], fn: (item: NoInfer<T>) => U) => U[]
+ * >((arr, fn) => arr.map(fn));
  * ```
  */
-export default function dual<
-    DataLast extends (...args: Array<any>) => any,
-    DataFirst extends (...args: Array<any>) => any,
->(
-    arity: Parameters<DataFirst>["length"],
-    body: DataFirst,
-): DataLast & DataFirst {
+export const dfdlT: {
+    <DataLast extends AnyFn, DataFirst extends AnyFn>(body: DataFirst, arity?: Parameters<DataFirst>["length"]): DataLast & DataFirst
+    <DataLast extends AnyFn, DataFirst extends AnyFn>(body: DataFirst, isDataFirst: (args: IArguments) => boolean): DataLast & DataFirst
+} = function (body: any, arity: any = body.length): any {
+    if (typeof arity === "function") {
+        return function () {
+            if (arity(arguments)) {
+                // @ts-expect-error ignore
+                return body.apply(this, arguments)
+            }
+            return ((self: any) => body(self, ...arguments)) as any
+        }
+    }
+
     switch (arity) {
         case 0:
         case 1:
@@ -47,7 +69,7 @@ export default function dual<
                 return function (self: any) {
                     return body(self)
                 }
-            } as any
+            }
 
         case 2:
             return function (a: any, b: any) {
@@ -95,6 +117,7 @@ export default function dual<
                     // @ts-expect-error ignore
                     return body.apply(this, arguments)
                 }
+
                 const args = arguments
                 return function (self: any) {
                     return body(self, ...args)

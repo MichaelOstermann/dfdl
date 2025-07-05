@@ -1,17 +1,23 @@
 /* eslint-disable prefer-rest-params */
 
 /**
- * A dataLast version of `pipe` that could be used to provide more complex
- * computations to functions that accept a function as a param (like `map`,
- * `filter`, `groupBy`, etc.).
+ * `flow(...fns)(input)`
  *
- * **Example**
+ * A data-last version of `pipe` for use with functions that accept a function parameter (like `map`, `filter`, etc.).
  *
  * ```ts
- * const increment = (x: number) => x + 1
+ * import { flow, pipe } from "@monstermann/dfdl";
+ *
+ * const increment = (x: number) => x + 1;
  * const double = (x: number) => x * 2;
  *
- * [1, 2, 3, 4].map(flow(increment, double)) // => [4, 6, 8, 10]
+ * flow(increment, double)(1); // 4
+ *
+ * [1, 2, 3, 4].map(flow(increment, double)); // [4, 6, 8, 10]
+ *
+ * // In comparison, `pipe` can feel too verbose:
+ *
+ * [1, 2, 3, 4].map((num) => pipe(num, increment, double)); // [4, 6, 8, 10]
  * ```
  */
 export default function flow<A, B>(ab: (a: A) => B): (a: A) => B
@@ -23,6 +29,7 @@ export default function flow<A, B, C, D, E, F, G>(ab: (a: A) => B, bc: (b: B) =>
 export default function flow<A, B, C, D, E, F, G, H>(ab: (a: A) => B, bc: (b: B) => C, cd: (c: C) => D, de: (d: D) => E, ef: (e: E) => F, fg: (f: F) => G, gh: (g: G) => H): (a: A) => H
 export default function flow<A, B, C, D, E, F, G, H, I>(ab: (a: A) => B, bc: (b: B) => C, cd: (c: C) => D, de: (d: D) => E, ef: (e: E) => F, fg: (f: F) => G, gh: (g: G) => H, hi: (h: H) => I): (a: A) => I
 export default function flow<A, B, C, D, E, F, G, H, I, J>(ab: (a: A) => B, bc: (b: B) => C, cd: (c: C) => D, de: (d: D) => E, ef: (e: E) => F, fg: (f: F) => G, gh: (g: G) => H, hi: (h: H) => I, ij: (i: I) => J): (a: A) => J
+export default function flow<A, B, C, D, E, F, G, H, I, J, K>(ab: (a: A) => B, bc: (b: B) => C, cd: (c: C) => D, de: (d: D) => E, ef: (e: E) => F, fg: (f: F) => G, gh: (g: G) => H, hi: (h: H) => I, ij: (i: I) => J, jk: (j: J) => K): (a: A) => K
 export default function flow<A, B, C, D, E, F, G, H, I, J, K, L>(ab: (a: A) => B, bc: (b: B) => C, cd: (c: C) => D, de: (d: D) => E, ef: (e: E) => F, fg: (f: F) => G, gh: (g: G) => H, hi: (h: H) => I, ij: (i: I) => J, jk: (j: J) => K, kl: (k: K) => L): (a: A) => L
 export default function flow<A, B, C, D, E, F, G, H, I, J, K, L, M>(ab: (a: A) => B, bc: (b: B) => C, cd: (c: C) => D, de: (d: D) => E, ef: (e: E) => F, fg: (f: F) => G, gh: (g: G) => H, hi: (h: H) => I, ij: (i: I) => J, jk: (j: J) => K, kl: (k: K) => L, lm: (l: L) => M): (a: A) => M
 export default function flow<A, B, C, D, E, F, G, H, I, J, K, L, M, N>(ab: (a: A) => B, bc: (b: B) => C, cd: (c: C) => D, de: (d: D) => E, ef: (e: E) => F, fg: (f: F) => G, gh: (g: G) => H, hi: (h: H) => I, ij: (i: I) => J, jk: (j: J) => K, kl: (k: K) => L, lm: (l: L) => M, mn: (m: M) => N): (a: A) => N

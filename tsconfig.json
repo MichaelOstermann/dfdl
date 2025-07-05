@@ -1,11 +1,13 @@
 {
     "extends": "@sindresorhus/tsconfig",
     "compilerOptions": {
-        "outDir": "dist"
+        "lib": ["DOM", "DOM.Iterable", "ES2023"],
+        "module": "ESNext",
+        "moduleResolution": "bundler",
+        "noEmit": true
     },
     "exclude": [
         "**/dist/**",
-        "**/node_modules/**",
-        "**/fixture/**"
+        "**/node_modules/**"
     ]
 }
