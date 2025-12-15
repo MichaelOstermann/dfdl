@@ -24,9 +24,9 @@ describe("dfdlT", () => {
             (b: string) => (a: number) => [number, string],
             (a: number, b: string) => [number, string]
         >(
-                (a, b) => [a, b],
-                // @ts-expect-error invalid
-                1,
-                )
+            (a, b) => [a, b],
+            // @ts-expect-error invalid
+            1,
+        )
     })
 })

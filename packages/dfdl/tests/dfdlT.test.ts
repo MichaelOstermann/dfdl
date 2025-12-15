@@ -39,9 +39,9 @@ describe("dfdlT", () => {
             (start: number, end?: number) => (str: string) => string,
             (str: string, start: number, end?: number) => string
         >(
-                (str, start, end) => str.slice(start, end),
-                args => typeof args[0] === "string",
-                )
+            (str, start, end) => str.slice(start, end),
+            args => typeof args[0] === "string",
+        )
 
         expect(slice("Hello World!", 0, 5)).toBe("Hello")
         expect(slice("Hello World!", 6)).toBe("World!")
