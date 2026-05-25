@@ -61,6 +61,8 @@ export const dfdlT: {
 
     switch (arity) {
         case 0:
+            throw new RangeError(`Invalid arity ${arity}`)
+
         case 1:
             return function (a: any) {
                 if (arguments.length >= 1) {

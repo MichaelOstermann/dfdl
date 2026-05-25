@@ -53,8 +53,8 @@ type Dfdl<T extends AnyFn> = ((...args: InferTail<T>) => (target: InferHead<T>) 
  * ```
  */
 export const dfdl: {
-    <T extends AnyFn>(fn: T, arity?: Parameters<T>["length"]): Dfdl<T>
-    <T extends AnyFn>(fn: T, isDataFirst: (args: IArguments) => boolean): Dfdl<T>
+    <T extends AnyFn>(fn: Parameters<T>["length"] extends 0 ? never : T, arity?: Parameters<T>["length"]): Dfdl<T>
+    <T extends AnyFn>(fn: Parameters<T>["length"] extends 0 ? never : T, isDataFirst: (args: IArguments) => boolean): Dfdl<T>
 } = function (fn: any, arity: any = fn.length): any {
     return dfdlT(fn, arity)
 }
