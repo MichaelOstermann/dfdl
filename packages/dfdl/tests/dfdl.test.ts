@@ -13,13 +13,13 @@ describe("dfdl", () => {
     })
 
     it("should respect arity argument", () => {
-        const addA = dfdl((...args: [number, number]) => args[0] + args[1])
-        expect(addA(1, 2)).toBe(Number.NaN)
-        expect(() => addA(2)(1)).toThrow()
+        const add = dfdl((...args: [number, number]) => args[0] + args[1], 2)
+        expect(add(1, 2)).toBe(3)
+        expect(add(2)(1)).toBe(3)
+    })
 
-        const addB = dfdl((...args: [number, number]) => args[0] + args[1], 2)
-        expect(addB(1, 2)).toBe(3)
-        expect(addB(2)(1)).toBe(3)
+    it("should throw for arity 0", () => {
+        expect(() => dfdl((...args: [number, number]) => args[0] + args[1])).toThrow(RangeError)
     })
 
     it("should respect arity predicate", () => {
