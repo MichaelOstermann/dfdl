@@ -58,14 +58,3 @@ export const dfdl: {
 } = function (fn: any, arity: any = fn.length): any {
     return dfdlT(fn, arity)
 }
-
-const slice = dfdl(
-    (str: string, start: number, end?: number) => str.slice(start, end),
-    args => typeof args[0] === "string",
-)
-
-slice("Hello World!", 0, 5) // "Hello"
-slice(0, 5)("Hello World!") // "Hello"
-
-slice("Hello World!", 6) // "World!"
-slice(6)("Hello World!") // "World!"
